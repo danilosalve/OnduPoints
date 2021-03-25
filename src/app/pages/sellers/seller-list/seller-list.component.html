@@ -1,0 +1,75 @@
+<app-toast aria-live="polite" aria-atomic="true"></app-toast>
+<div class="row">
+  <div class="col-11">
+    <app-search (filter)="filterResources($event)"></app-search>
+  </div>
+
+  <div class="col-1 text-right">
+    <a [routerLink]="['new']" class="btn btn-danger mt-3 mr-3">+ Incluir</a>
+  </div>
+</div>
+
+<div class="d-flex justify-content-between p-2">
+  <div class="col-12">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">Código</th>
+          <th scope="col">Nome</th>
+          <th scope="col">Estado</th>
+          <th scope="col">Cidade</th>
+          <th scope="col">Ações</th>
+        </tr>
+      </thead>
+
+      <tbody *ngIf="resources$ | async">
+        <tr *ngFor="let seller of resources">
+          <th scope="row">{{ seller.id }}</th>
+          <td>
+            {{ seller.name }}
+          </td>
+          <td>{{ seller.state }}</td>
+          <td>{{ seller.city }}</td>
+          <td>
+            <button
+              [routerLink]="[seller.id, 'edit']"
+              class="btn btn-outline-info btn-sm mr-2"
+              placement="top"
+              ngbTooltip="Editar Vendedor"
+            >
+              <span class="oi oi-pencil"></span>
+            </button>
+
+            <button
+              (click)="deleteResource(seller)"
+              class="btn btn-outline-danger btn-sm"
+              placement="top"
+              ngbTooltip="Excluir Vendedor"
+            >
+              <span class="oi oi-trash"></span>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="d-flex justify-content-between p-2">
+  <ngb-pagination
+    [collectionSize]="collectionSize"
+    [(page)]="page"
+    [pageSize]="pageSize"
+    (pageChange)="refreshResources()"
+  ></ngb-pagination>
+  <select
+    class="custom-select"
+    style="width: auto"
+    [(ngModel)]="pageSize"
+    (ngModelChange)="refreshResources()"
+  >
+    <option [ngValue]="10">10 items por pagina</option>
+    <option [ngValue]="25">25 items por pagina</option>
+    <option [ngValue]="50">50 items por pagina</option>
+  </select>
+</div>

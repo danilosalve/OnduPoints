@@ -1,0 +1,17 @@
+<form [formGroup]="formSearch">
+  <div class="form-row">
+    <div class="form-group form-inline ml-3 mt-3 mb-3">
+      <label><strong>Pesquisar: </strong> </label>
+      <input
+        type="search"
+        formControlName="search"
+        name="search"
+        class="form-control ml-2"
+        placeholder="Pesquisar..."
+        autofocus
+        autocomplete="off"
+      />
+      <span class="oi oi-magnifying-glass ml-2"></span>
+    </div>
+  </div>
+</form>

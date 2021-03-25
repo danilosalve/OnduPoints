@@ -1,0 +1,12 @@
+<div class="row mt-1 mb-2">
+  <div class="col-11">
+    <h3 class="h3 border-left pl-2">
+      {{ pageTitle }}
+    </h3>
+  </div>
+  <div *ngIf="showButton" class="col-1 text-right">
+    <a [routerLink]="buttonLink" class="btn mt-3 mr-3" [ngClass]="buttonClass">
+      {{ buttonText }}
+    </a>
+  </div>
+</div>
