@@ -1,7 +1,12 @@
-<ul ngbNav #nav="ngbNav" class="nav-tabs">
+<ul ngbNav #nav="ngbNav" class="nav-tabs sticky-top navbar-light bg-light">
   <li ngbNavItem>
     <a ngbNavLink class="text-danger">
-      <img src="../../../../assets/img/logo.svg" width="50" height="30" alt="">
+      <img
+        src="../../../../assets/img/logo.svg"
+        width="50"
+        height="30"
+        alt=""
+      />
     </a>
   </li>
   <li ngbNavItem>
@@ -12,8 +17,7 @@
     <a ngbNavLink class="text-danger" routerLink="/sellers">Vendedores</a>
   </li>
   <li ngbNavItem>
-    <a ngbNavLink class="text-danger">Tecnicos</a>
-    <ng-template ngbNavContent>Second content</ng-template>
+    <a ngbNavLink class="text-danger" routerLink="/experts">Tecnicos</a>
   </li>
   <li ngbNavItem>
     <a ngbNavLink class="text-danger">Lançamentos</a>

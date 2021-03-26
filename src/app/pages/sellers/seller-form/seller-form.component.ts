@@ -1,50 +1,35 @@
-import { Component, Injector } from '@angular/core';
+import { Component, Injector, OnInit } from '@angular/core';
 import { Validators } from '@angular/forms';
 
 import { BaseResourceFormComponent } from 'src/app/shared/components/base-resource-form/base-resource-form.component';
 import { Seller } from '../shared/seller.model';
 import { SellerService } from './../shared/seller.service';
-
+import { State } from './../../../shared/models/state.model';
+import { StatesService } from './../../../shared/services/states.service';
+import { Subject, Observable } from 'rxjs';
 @Component({
   selector: 'app-seller-form',
   templateUrl: './seller-form.component.html',
   styleUrls: ['./seller-form.component.css'],
 })
-export class SellerFormComponent extends BaseResourceFormComponent<Seller> {
-  states = [
-    {value: 'AC', text: 'ACRE'},
-    {value: 'AL', text: 'ALAGOAS'},
-    {value: 'AP', text: 'AMAPÁ'},
-    {value: 'AM', text: 'AMAZONAS'},
-    {value: 'BA', text: 'BAHIA'},
-    {value: 'CE', text: 'CEARÁ'},
-    {value: 'DF', text: 'DISTRITO FEDERAL'},
-    {value: 'ES', text: 'ESPIRITO SANTOS'},
-    {value: 'GO', text: 'GOIÁS'},
-    {value: 'MA', text: 'MARANHÃO'},
-    {value: 'MT', text: 'MATO GROSSO'},
-    {value: 'MS', text: 'MATO GROSSO DO SUL'},
-    {value: 'MG', text: 'MINAS GERAIS'},
-    {value: 'PA', text: 'PARÁ'},
-    {value: 'PB', text: 'PARAÍBA'},
-    {value: 'PR', text: 'PARANÁ'},
-    {value: 'PE', text: 'PERNANBUCO'},
-    {value: 'PI', text: 'PIAUÍ'},
-    {value: 'RJ', text: 'RIO DE JANEIRO'},
-    {value: 'RN', text: 'RIO GRANDE DO NORTE'},
-    {value: 'RS', text: 'RIO GRANDE DO SUL'},
-    {value: 'RO', text: 'RONDÔNIA'},
-    {value: 'RR', text: 'RORAIMA'},
-    {value: 'SC', text: 'SANTA CATARINA'},
-    {value: 'SP', text: 'SÃO PAULO'},
-    {value: 'SE', text: 'SERGIPE'},
-    {value: 'TO', text: 'TOCANTINS'},
+export class SellerFormComponent extends BaseResourceFormComponent<Seller> implements OnInit {
+  states: State[] = [];
+  offices =  [
+    {value: 1, text: 'Gerente'},
+    {value: 2, text: 'Vendedor'}
   ];
+
   constructor(
     protected sellerService: SellerService,
-    protected injector: Injector
+    protected injector: Injector,
+    protected stateService: StatesService
   ) {
     super(injector, new Seller(), sellerService, Seller.fromJson);
+  }
+
+  ngOnInit(): void {
+    super.ngOnInit();
+    this.getStates();
   }
 
   protected buildResourceForm(): void {
@@ -59,7 +44,10 @@ export class SellerFormComponent extends BaseResourceFormComponent<Seller> {
       neighborhood: [null],
       state: [''],
       city: [null],
-      complement: [null]
+      complement: [null],
+      office: ['', [Validators.required]],
+      isActive: [null],
+      birthDate: [null, [Validators.required]]
     });
   }
 
@@ -70,5 +58,13 @@ export class SellerFormComponent extends BaseResourceFormComponent<Seller> {
   protected editionPageTitle(): string {
     const sellerName = this.resource.name || '';
     return 'Editando Vendedor: ' + sellerName;
+  }
+
+  protected getStates(): void {
+    // tslint:disable-next-line: deprecation
+    this.stateService.getAll().subscribe({
+      next: states => this.states = states,
+      error: error => console.error(error)
+    });
   }
 }

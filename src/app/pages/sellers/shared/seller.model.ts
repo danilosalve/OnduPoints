@@ -2,6 +2,7 @@ import { PeopleModel } from 'src/app/shared/models/people.model';
 
 export class Seller extends PeopleModel {
   storeId: number;
+  office?: number;
   constructor() {
     super();
   }

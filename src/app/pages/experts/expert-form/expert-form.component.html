@@ -1,0 +1,72 @@
+<app-toast aria-live="polite" aria-atomic="true"></app-toast>
+<app-bread-crumb
+  [items]="[{ text: 'Tecnicos', link: '/experts' }, { text: pageTitle }]"
+></app-bread-crumb>
+
+<app-page-header
+  [page-title]="pageTitle"
+  button-text="<< Voltar"
+  button-link="/experts"
+  button-class="btn-danger"
+></app-page-header>
+
+<form [formGroup]="resourceForm" (submit)="submitForm()">
+  <div class="card-header">Informações sobre o Tecnico</div>
+  <div class="card-body">
+    <div class="form-row">
+      <div class="form group col-md-4">
+        <label for="name">Nome</label>
+        <input
+          type="text"
+          class="form-control"
+          id="name"
+          formControlName="name"
+          autofocus
+          placeholder="Informe o nome"
+        />
+        <app-form-field-error
+          [form-control]="resourceForm.get('name')"
+        ></app-form-field-error>
+      </div>
+
+      <div class="form-group col-md-2">
+        <label for="state">Regional</label>
+        <select
+          class="custom-select"
+          id="regionalId"
+          formControlName="regionalId"
+        >
+          <option value="" selected>Selecione a regional...</option>
+          <option *ngFor="let regional of regional" [value]="regional.value">
+            {{ regional.text }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col-md-1 ml-4">
+        <input
+          class="form-check-input"
+          type="checkbox"
+          id="isActive"
+          formControlName="isActive"
+        />
+        <label class="form-check-label" for="isActive"> Ativo </label>
+      </div>
+    </div>
+  </div>
+
+  <app-server-error-messages
+    [server-error-messages]="serverErrorMessages"
+  ></app-server-error-messages>
+  <footer>
+    <button
+      class="btn btn-danger btn-lg float-right mt-3 mr-3 mb-3"
+      type="submit"
+      [disabled]="submittingForm || resourceForm.invalid"
+    >
+      Salvar
+    </button>
+  </footer>
+</form>

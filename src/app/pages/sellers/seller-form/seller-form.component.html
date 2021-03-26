@@ -10,7 +10,7 @@
   button-class="btn-danger"
 ></app-page-header>
 
-<form [formGroup]="resourceForm" (submit)="submitForm()">
+<form [formGroup]="resourceForm" (submit)="submitForm()" class="mb-5">
   <div class="card-header">Informações sobre o Vendedor</div>
 
   <div class="card-body">
@@ -29,6 +29,7 @@
           [form-control]="resourceForm.get('name')"
         ></app-form-field-error>
       </div>
+
       <div class="form-group col-md-2">
         <label for="document">CPF</label>
         <input
@@ -42,6 +43,56 @@
         <app-form-field-error
           [form-control]="resourceForm.get('document')"
         ></app-form-field-error>
+      </div>
+
+      <div class="form-group col-md-2">
+        <label for="office">Cargo</label>
+        <select class="custom-select" id="office" formControlName="office">
+          <option value="" selected>Selecione o cargo...</option>
+          <option *ngFor="let office of offices" [value]="office.value">
+            {{ office.text }}
+          </option>
+        </select>
+        <app-form-field-error
+          [form-control]="resourceForm.get('office')"
+        ></app-form-field-error>
+      </div>
+
+      <div class="form-group col-md-2">
+        <label for="birthDate">Data de Nascimento</label>
+        <div class="input-group">
+          <input
+            class="form-control"
+            placeholder="aaaa/mm/dd"
+            name="birthDate"
+            id="birthDate"
+            formControlName="birthDate"
+            ngbDatepicker
+            #d="ngbDatepicker"
+          />
+          <div class="input-group-append">
+            <button
+              class="btn btn-outline-secondary oi oi-calendar"
+              (click)="d.toggle()"
+              type="button"
+            ></button>
+          </div>
+        </div>
+        <app-form-field-error
+          [form-control]="resourceForm.get('birthDate')"
+        ></app-form-field-error>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col-md-1 ml-4">
+        <input
+          class="form-check-input"
+          type="checkbox"
+          id="isActive"
+          formControlName="isActive"
+        />
+        <label class="form-check-label" for="isActive"> Ativo </label>
       </div>
     </div>
   </div>
@@ -132,8 +183,10 @@
         <label for="state">Estado</label>
         <select class="custom-select" id="state" formControlName="state">
           <option value="" selected>Selecione o Estado...</option>
-          <option *ngFor="let state of states" [value]="state.value">{{state.text}}</option>
-      </select>
+          <option *ngFor="let state of states" [value]="state.value">
+            {{ state.text }}
+          </option>
+        </select>
       </div>
 
       <div class="form-group col-md-3">
@@ -170,7 +223,8 @@
   <app-server-error-messages
     [server-error-messages]="serverErrorMessages"
   ></app-server-error-messages>
-
+</form>
+<footer>
   <button
     class="btn btn-danger btn-lg float-right mt-3 mr-3 mb-3"
     type="submit"
@@ -178,4 +232,4 @@
   >
     Salvar
   </button>
-</form>
+</footer>

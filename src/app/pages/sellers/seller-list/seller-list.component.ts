@@ -17,4 +17,12 @@ export class SellerListComponent extends BaseResourceListComponent<Seller> {
     super(sellerService, toastService);
   }
 
+  isActiveClass(isActive: boolean): string {
+    return isActive ? 'badge-primary' : 'badge-danger';
+  }
+
+  isActiveText(isActive: boolean): string {
+    return isActive ? 'Ativo' : 'Inativo';
+  }
+
 }

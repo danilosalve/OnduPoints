@@ -1,6 +1,8 @@
+import { Expert } from './pages/experts/shared/expert.model';
 import { InMemoryDbService, RequestInfo } from 'angular-in-memory-web-api';
 import { Observable } from 'rxjs';
 import { Seller } from './pages/sellers/shared/seller.model';
+import { State } from './shared/models/state.model';
 
 export class InMemoryDatabase implements InMemoryDbService {
   createDb(reqInfo?: RequestInfo): {} | Observable<{}> | Promise<{}> {
@@ -423,6 +425,47 @@ export class InMemoryDatabase implements InMemoryDbService {
       },
     ];
 
-    return { sellers };
+    const experts: Expert[] = [
+      {id: 1, name: 'Gregory House', regionalId: '3', isActive: true},
+      {id: 2, name: 'Lisa Cuddy', regionalId: '2', isActive: true},
+      {id: 3, name: 'Lawrence Kutner', regionalId: '3', isActive: true},
+      {id: 4, name: 'Robert Chase', regionalId: '1', isActive: true},
+      {id: 5, name: 'James Wilson', regionalId: '3', isActive: true},
+      {id: 6, name: 'Eric Foreman', regionalId: '2', isActive: true},
+      {id: 7, name: 'Remy Hadley Thirteen', regionalId: '1', isActive: true},
+      {id: 8, name: 'Chris Taub', regionalId: '1', isActive: true},
+    ];
+
+    const states: State[] = [
+      {value: 'AC', text: 'ACRE'},
+      {value: 'AL', text: 'ALAGOAS'},
+      {value: 'AP', text: 'AMAPÁ'},
+      {value: 'AM', text: 'AMAZONAS'},
+      {value: 'BA', text: 'BAHIA'},
+      {value: 'CE', text: 'CEARÁ'},
+      {value: 'DF', text: 'DISTRITO FEDERAL'},
+      {value: 'ES', text: 'ESPIRITO SANTOS'},
+      {value: 'GO', text: 'GOIÁS'},
+      {value: 'MA', text: 'MARANHÃO'},
+      {value: 'MT', text: 'MATO GROSSO'},
+      {value: 'MS', text: 'MATO GROSSO DO SUL'},
+      {value: 'MG', text: 'MINAS GERAIS'},
+      {value: 'PA', text: 'PARÁ'},
+      {value: 'PB', text: 'PARAÍBA'},
+      {value: 'PR', text: 'PARANÁ'},
+      {value: 'PE', text: 'PERNANBUCO'},
+      {value: 'PI', text: 'PIAUÍ'},
+      {value: 'RJ', text: 'RIO DE JANEIRO'},
+      {value: 'RN', text: 'RIO GRANDE DO NORTE'},
+      {value: 'RS', text: 'RIO GRANDE DO SUL'},
+      {value: 'RO', text: 'RONDÔNIA'},
+      {value: 'RR', text: 'RORAIMA'},
+      {value: 'SC', text: 'SANTA CATARINA'},
+      {value: 'SP', text: 'SÃO PAULO'},
+      {value: 'SE', text: 'SERGIPE'},
+      {value: 'TO', text: 'TOCANTINS'},
+    ]
+
+    return { sellers, experts, states };
   }
 }

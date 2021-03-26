@@ -2,7 +2,7 @@ import { BaseResourceModel } from './base-resource.model';
 
 export abstract class PeopleModel extends BaseResourceModel {
   id?: number;
-  name?: string;
+  name: string;
   state?: string;
   city?: string;
   address?: string;
@@ -14,6 +14,7 @@ export abstract class PeopleModel extends BaseResourceModel {
   email?: string;
   phone?: number;
   isActive: boolean;
+  birthDate?: Date;
 }
 
 export enum TypeOfPerson {
