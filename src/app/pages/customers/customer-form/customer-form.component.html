@@ -1,0 +1,129 @@
+<app-toast aria-live="polite" aria-atomic="true"></app-toast>
+<app-bread-crumb
+  [items]="[{ text: 'Clientes', link: '/customers' }, { text: pageTitle }]"
+></app-bread-crumb>
+
+<app-page-header
+  [page-title]="pageTitle"
+  button-text="<< Voltar"
+  button-link="/customers"
+  button-class="btn-danger"
+></app-page-header>
+
+<form [formGroup]="resourceForm" (submit)="submitForm()" class="mb-5">
+  <div class="card-header">Informações sobre o Cliente</div>
+  <div class="card-body">
+    <div class="form-row">
+      <div class="form group col-md-4">
+        <label for="name">Nome</label>
+        <input
+          type="text"
+          class="form-control"
+          id="name"
+          formControlName="name"
+          autofocus
+          placeholder="Informe o nome"
+        />
+        <app-form-field-error
+          [form-control]="resourceForm.get('name')"
+        ></app-form-field-error>
+      </div>
+
+      <div class="form-group col-md-2">
+        <label for="document">CPF/CNPJ</label>
+        <input
+          [mask]="documentMask"
+          [showMaskTyped]="true"
+          type="text"
+          class="form-control"
+          id="document"
+          formControlName="document"
+        />
+        <app-form-field-error
+          [form-control]="resourceForm.get('document')"
+        ></app-form-field-error>
+      </div>
+
+      <div class="form-group col-md-2">
+        <label for="expertId">Tecnico</label>
+        <select class="custom-select" id="expertId" formControlName="expertId">
+          <option value="" selected>Selecione o Tecnico...</option>
+          <option *ngFor="let expert of experts" [value]="expert.id">
+            {{ expert.name }}
+          </option>
+        </select>
+        <app-form-field-error
+          [form-control]="resourceForm.get('expertId')"
+        ></app-form-field-error>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-1 ml-4">
+        <input
+          class="form-check-input"
+          type="checkbox"
+          id="isActive"
+          formControlName="isActive"
+        />
+        <label class="form-check-label" for="isActive"> Ativo </label>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-header">Endereço</div>
+  <div class="card-body">
+    <div class="form-row">
+      <div class="form-group col-md-2">
+        <label for="state">Estado</label>
+        <select class="custom-select" id="state" formControlName="state">
+          <option value="" selected>Selecione o Estado...</option>
+          <option *ngFor="let state of states" [value]="state.value">
+            {{ state.text }}
+          </option>
+        </select>
+      </div>
+
+      <div class="form-group col-md-3">
+        <label for="city">Municipio</label>
+        <input
+          type="text"
+          class="form-control"
+          id="city"
+          formControlName="city"
+          placeholder="Informe o Municipio"
+        />
+        <app-form-field-error
+          [form-control]="resourceForm.get('city')"
+        ></app-form-field-error>
+      </div>
+
+      <div class="form-group col-md-2">
+        <label for="neighborhood">Bairro</label>
+        <input
+          type="text"
+          class="form-control"
+          id="neighborhood"
+          formControlName="neighborhood"
+          placeholder="Informe o bairro"
+        />
+        <app-form-field-error
+          [form-control]="resourceForm.get('neighborhood')"
+        ></app-form-field-error>
+      </div>
+    </div>
+  </div>
+  <app-server-error-messages
+    [server-error-messages]="serverErrorMessages"
+  ></app-server-error-messages>
+  <footer>
+    <button
+      class="btn btn-danger btn-lg float-right mt-3 mr-3 mb-3"
+      type="submit"
+      [disabled]="submittingForm || resourceForm.invalid"
+    >
+      Salvar
+    </button>
+  </footer>
+</form>
+
+

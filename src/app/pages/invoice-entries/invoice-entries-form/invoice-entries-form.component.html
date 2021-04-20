@@ -1,0 +1,231 @@
+<app-toast aria-live="polite" aria-atomic="true"></app-toast>
+<app-bread-crumb
+  [items]="[{ text: 'Lançamentos', link: '/entries' }, { text: pageTitle }]"
+></app-bread-crumb>
+
+<app-page-header
+  [page-title]="pageTitle"
+  button-text="<< Voltar"
+  button-link="/entries"
+  button-class="btn-danger"
+></app-page-header>
+
+<form [formGroup]="resourceForm" (submit)="submitForm()" class="mb-5">
+  <ngb-accordion [closeOthers]="false" activeIds="generalData">
+    <ngb-panel id="generalData" title="Informações Gerais">
+      <ng-template ngbPanelContent>
+        <div class="card-body">
+          <div class="form-row">
+            <div class="form-group col-md-1 ml-2">
+              <label for="document">Nº Nota Fiscal</label>
+              <input
+                type="text"
+                class="form-control"
+                id="document"
+                formControlName="document"
+                mask="000.000.000"
+                placeholder="000.000.000"
+                autofocus
+              />
+              <app-form-field-error
+                [form-control]="resourceForm.get('document')"
+              ></app-form-field-error>
+            </div>
+
+            <div class="form-group col-md-1 ml-2">
+              <label for="issueDate">Data de Emissão</label>
+              <div class="input-group">
+                <input
+                  class="form-control"
+                  placeholder="aaaa/mm/dd"
+                  name="issueDate"
+                  id="issueDate"
+                  formControlName="issueDate"
+                  ngbDatepicker
+                  #d="ngbDatepicker"
+                />
+                <div class="input-group-append">
+                  <button
+                    class="btn btn-outline-secondary oi oi-calendar"
+                    (click)="d.toggle()"
+                    type="button"
+                  ></button>
+                </div>
+              </div>
+              <app-form-field-error
+                [form-control]="resourceForm.get('issueDate')"
+              ></app-form-field-error>
+            </div>
+
+            <div class="form-group col-md-1 ml-2">
+              <label for="amount">Valor Total</label>
+              <input
+                type="text"
+                class="form-control"
+                id="amount"
+                formControlName="amount"
+                placeholder="0,00"
+                mask="separator.2"
+                thousandSeparator="."
+              />
+              <app-form-field-error
+                [form-control]="resourceForm.get('amount')"
+              ></app-form-field-error>
+            </div>
+
+            <div class="form-group col-md-2 ml-2">
+              <label for="sellerId">Vendedor</label>
+              <select
+                class="custom-select"
+                id="sellerId"
+                formControlName="sellerId"
+                (ngModelChange)="setSellerName($event)"
+              >
+                <option value="" selected>Selecione o Vendedor...</option>
+                <option *ngFor="let seller of sellers" [value]="seller.id">
+                  {{ seller.name }}
+                </option>
+              </select>
+              <app-form-field-error
+                [form-control]="resourceForm.get('sellerId')"
+              ></app-form-field-error>
+            </div>
+
+            <div class="form-group col-md-4 ml-2">
+              <label for="buyerName">Nome Comprador</label>
+              <input
+                type="text"
+                class="form-control"
+                id="buyerName"
+                formControlName="buyerName"
+                placeholder="Informe o nome do Comprador"
+              />
+              <app-form-field-error
+                [form-control]="resourceForm.get('buyerName')"
+              ></app-form-field-error>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </ngb-panel>
+    <ngb-panel id="products"title="Produtos">
+      <ng-template ngbPanelContent>
+        <div class="card-body">
+          <div class="row">
+            <button
+            class="btn btn-danger btn-lg float-right mt-3 mr-3 mb-3"
+            type="button"
+            (click)="open(content)"
+          >
+            Adicionar Produto
+          </button>
+          </div>
+
+        </div>
+        <div class="d-flex justify-content-between p-2 mb-5">
+          <div class="col-12">
+            <div class="table table-striped" *ngIf="itemIsEmpty(); else nodata">
+              <thead>
+                <tr>
+                  <th scope="col">Produto</th>
+                  <th scope="col">Quantidade</th>
+                  <th scope="col">Preço Unitario</th>
+                  <th scope="col">Ações</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr *ngFor="let item of items">
+                  <td>
+                    {{ item.product }}
+                  </td>
+                  <td>{{ item.quantity }}</td>
+                  <td>{{ item.unitPrice }}</td>
+                  <td>
+                    <button
+                      (click)="removeItem(item.id)"
+                      class="btn btn-outline-danger btn-sm"
+                      placement="top"
+                      ngbTooltip="Excluir Item"
+                      >
+                      <span class="oi oi-trash"></span>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </div>
+
+        </div>
+        </div>
+      </ng-template>
+    </ngb-panel>
+  </ngb-accordion>
+
+  <app-server-error-messages
+    [server-error-messages]="serverErrorMessages"
+  ></app-server-error-messages>
+  <footer>
+    <button
+      class="btn btn-danger btn-lg float-right mt-3 mr-3 mb-3"
+      type="submit"
+      [disabled]="submittingForm || resourceForm.invalid"
+    >
+      Salvar
+    </button>
+  </footer>
+</form>
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Adicionar Produto</h4>
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form >
+      <div class="form-group">
+        <label for="product">Produto</label>
+        <div class="input-group">
+          <input id="product" class="form-control" name="product" (change)="setValueChange($event.target.value, 'product')"/>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="quantity">Quantidade</label>
+        <div class="input-group">
+          <input id="quantity" type="number" class="form-control" (change)="setValueChange($event.target.value, 'quantity')" />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="unitPrice">Valor Unitario</label>
+        <div class="input-group">
+          <input
+            id="unitPrice"
+            class="form-control"
+            type="text"
+            placeholder="0,00"
+            mask="separator.2"
+            thousandSeparator="."
+            (change)="setValueChange($event.target.value, 'unitPrice')"
+          />
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-danger" (click)="addItem()">
+      Adicionar
+    </button>
+  </div>
+</ng-template>
+
+<ng-template #nodata>
+  <strong>Não há dados</strong>
+</ng-template>

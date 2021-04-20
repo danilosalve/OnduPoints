@@ -18,39 +18,37 @@
           <th scope="col">Nome</th>
           <th scope="col">Estado</th>
           <th scope="col">Cidade</th>
-          <th scope="col">Cliente</th>
           <th scope="col">Status</th>
           <th scope="col">Ações</th>
         </tr>
       </thead>
 
       <tbody *ngIf="resources$ | async">
-        <tr *ngFor="let seller of resources">
-          <th scope="row">{{ seller.id }}</th>
+        <tr *ngFor="let customer of resources">
+          <th scope="row">{{ customer.id }}</th>
           <td>
-            {{ seller.name }}
+            {{ customer.name }}
           </td>
-          <td>{{ seller.state }}</td>
-          <td>{{ seller.city }}</td>
-          <td>{{ seller.customerName }}</td>
+          <td>{{ customer.state }}</td>
+          <td>{{ customer.city }}</td>
           <td>
-            <span class="badge badge-pill badge-primary" [ngClass]="isActiveClass(seller.isActive)">{{isActiveText(seller.isActive)}}</span>
+            <span class="badge badge-pill badge-primary" [ngClass]="isActiveClass(customer.isActive)">{{isActiveText(customer.isActive)}}</span>
           </td>
           <td>
             <button
-              [routerLink]="[seller.id, 'edit']"
+              [routerLink]="[customer.id, 'edit']"
               class="btn btn-outline-info btn-sm mr-2"
               placement="top"
-              ngbTooltip="Editar Vendedor"
+              ngbTooltip="Editar Cliente"
             >
               <span class="oi oi-pencil"></span>
             </button>
 
             <button
-              (click)="deleteResource(seller)"
+              (click)="deleteResource(customer)"
               class="btn btn-outline-danger btn-sm"
               placement="top"
-              ngbTooltip="Excluir Vendedor"
+              ngbTooltip="Excluir Cliente"
             >
               <span class="oi oi-trash"></span>
             </button>

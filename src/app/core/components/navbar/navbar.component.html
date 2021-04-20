@@ -1,6 +1,7 @@
+
 <ul ngbNav #nav="ngbNav" class="nav-tabs sticky-top navbar-light bg-light">
   <li ngbNavItem>
-    <a ngbNavLink class="text-danger">
+    <a ngbNavLink class="text-danger" routerLink="">
       <img
         src="../../../../assets/img/logo.svg"
         width="50"
@@ -10,8 +11,7 @@
     </a>
   </li>
   <li ngbNavItem>
-    <a ngbNavLink class="text-danger">Lojas</a>
-    <ng-template ngbNavContent>First content</ng-template>
+    <a ngbNavLink class="text-danger" routerLink="/customers">Clientes</a>
   </li>
   <li ngbNavItem>
     <a ngbNavLink class="text-danger" routerLink="/sellers">Vendedores</a>
@@ -20,8 +20,8 @@
     <a ngbNavLink class="text-danger" routerLink="/experts">Tecnicos</a>
   </li>
   <li ngbNavItem>
-    <a ngbNavLink class="text-danger">Lançamentos</a>
-    <ng-template ngbNavContent>Second content</ng-template>
+    <a ngbNavLink class="text-danger" routerLink="/entries">Lançamentos</a>
   </li>
 </ul>
 <div [ngbNavOutlet]="nav"></div>
+<app-loading></app-loading>

@@ -1,0 +1,16 @@
+ngb-pagination ::ng-deep ul > li:not(.active) > a {
+  color: red !important;
+}
+
+ngb-pagination ::ng-deep .page-item.active .page-link {
+  border-color: white;
+  background-color: red;
+}
+
+ngb-pagination ::ng-deep .page-item.active .page-link:focus, .page-link:not(:disabled):not(.disabled):active:focus {
+  box-shadow: 0 0 0 0.1rem tomato;
+}
+
+ngb-pagination ::ng-deep .page-link:not(:disabled):not(.disabled):active:focus {
+  box-shadow: 0 0 0 0.1rem tomato;
+}

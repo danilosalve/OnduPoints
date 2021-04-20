@@ -1,4 +1,3 @@
-import { SharedModule } from './../shared/shared.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
@@ -8,8 +7,9 @@ import { RouterModule } from '@angular/router';
 
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDatabase } from '../in-memory-database';
+import { LoadingModule } from './components/loading/loading.module';
 import { NavbarComponent } from './components/navbar/navbar.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { SharedModule } from './../shared/shared.module';
 
 @NgModule({
   declarations: [NavbarComponent],
@@ -20,7 +20,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     HttpClientModule,
     HttpClientInMemoryWebApiModule.forRoot(InMemoryDatabase),
     RouterModule,
-    SharedModule
+    SharedModule,
+    LoadingModule
   ],
   exports: [
     BrowserModule,

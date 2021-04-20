@@ -14,43 +14,43 @@
     <table class="table table-striped">
       <thead>
         <tr>
-          <th scope="col">Código</th>
-          <th scope="col">Nome</th>
-          <th scope="col">Estado</th>
-          <th scope="col">Cidade</th>
-          <th scope="col">Cliente</th>
-          <th scope="col">Status</th>
+          <th scope="col">Id</th>
+          <th scope="col">Num. Nota</th>
+          <th scope="col">Data de Emissao</th>
+          <th scope="col">Nome Vendedor</th>
+          <th scope="col">Nome Cliente</th>
+          <th scope="col">Nome Comprador</th>
+          <th scope="col">Valor Total</th>
           <th scope="col">Ações</th>
         </tr>
       </thead>
 
       <tbody *ngIf="resources$ | async">
-        <tr *ngFor="let seller of resources">
-          <th scope="row">{{ seller.id }}</th>
+        <tr *ngFor="let entries of resources">
+          <th scope="row">{{ entries.id }}</th>
           <td>
-            {{ seller.name }}
+            {{ entries.document }}
           </td>
-          <td>{{ seller.state }}</td>
-          <td>{{ seller.city }}</td>
-          <td>{{ seller.customerName }}</td>
-          <td>
-            <span class="badge badge-pill badge-primary" [ngClass]="isActiveClass(seller.isActive)">{{isActiveText(seller.isActive)}}</span>
-          </td>
+          <td>{{ entries.issueDate }}</td>
+          <td>{{ entries.customerName }}</td>
+          <td>{{ entries.sellerName }}</td>
+          <td>{{ entries.buyerName }}</td>
+          <td>{{ entries.amount }}</td>
           <td>
             <button
-              [routerLink]="[seller.id, 'edit']"
+              [routerLink]="[entries.id, 'edit']"
               class="btn btn-outline-info btn-sm mr-2"
               placement="top"
-              ngbTooltip="Editar Vendedor"
+              ngbTooltip="Editar Lançamento"
             >
               <span class="oi oi-pencil"></span>
             </button>
 
             <button
-              (click)="deleteResource(seller)"
+              (click)="deleteResource(entries)"
               class="btn btn-outline-danger btn-sm"
               placement="top"
-              ngbTooltip="Excluir Vendedor"
+              ngbTooltip="Excluir Lançamento"
             >
               <span class="oi oi-trash"></span>
             </button>

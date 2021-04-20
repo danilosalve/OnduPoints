@@ -13,6 +13,18 @@ const routes: Routes = [
     loadChildren: () => import('./pages/experts/experts.module').then(
       m => m.ExpertsModule
     )
+  },
+  {
+    path: 'customers',
+    loadChildren: () => import('./pages/customers/customers.module').then(
+      m => m.CustomersModule
+    )
+  },
+  {
+    path: 'entries',
+    loadChildren: () => import('./pages/invoice-entries/invoice-entries.module').then(
+      m => m.InvoiceEntriesModule
+    )
   }
 ];
 @NgModule({

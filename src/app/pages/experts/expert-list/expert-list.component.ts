@@ -27,8 +27,7 @@ export class ExpertListComponent extends BaseResourceListComponent<Expert> {
   }
 
   getRegionalText(regionalId: string): string {
-    console.log(regionalId);
-    switch(regionalId) {
+    switch (regionalId) {
       case RegionalEnum.NORTE:
         return 'Norte';
       case RegionalEnum.SUDESTE:
